@@ -1,5 +1,5 @@
 SetEnvIf Host local.zf APPLICATION_ENV=development
-SetEnvIf Host demo.pixelmod.net APPLICATION_ENV=production
+SetEnvIf Host cv.pixelmod.net APPLICATION_ENV=production
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
