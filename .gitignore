@@ -1,0 +1,6 @@
+application/configs/application.ini
+library/Doctrine/
+library/Zend/
+nbproject/
+tests/
+.zfproject.xml
