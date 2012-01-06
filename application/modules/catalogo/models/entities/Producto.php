@@ -3,7 +3,7 @@
 //namespace Entity;
  
 /**
- * @Entity(repositoryClass="Catalogo_Model_Repository_Common")
+ * @Entity
  * @Table(name="productos")
  */
 
@@ -52,7 +52,6 @@ class Catalogo_Model_Entity_Producto
     public function getId() {
         return $this->id;
     }
-
     
     public function getDescripcion() {
         return $this->descripcion;

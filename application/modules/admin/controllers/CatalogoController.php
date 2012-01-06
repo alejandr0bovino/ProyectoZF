@@ -2,13 +2,13 @@
 
 class Admin_CatalogoController extends ProyectoZF_Controller_Action
 {      
-    private $productoService;
+    private $repository;
         
     public function init()
     {
         parent::init();
                 
-        $this->productoService = $this->_helper->Service('Catalogo_Model_Service_Common');      
+        $this->repository = new Catalogo_Model_Repository_Common();
     }
     
     public function preDispatch()
@@ -35,7 +35,7 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
         $this->view->headTitle()->prepend($titulo);
         $this->view->titulo = $titulo;
         
-        $this->view->listaProducto = $this->productoService->obtenerTodos();
+        $this->view->listaProducto = $this->repository->obtenerTodos();
     }
     
     public function crearAction()
@@ -45,7 +45,6 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
         $this->view->titulo = $titulo;
         
         $form = $this->_getForm();
-                
         $this->view->form = $form;                
         
     }
@@ -86,7 +85,7 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
             "cantidad" => $form->cantidad->getValue()
         );        
         
-        $this->productoService->guardar($data);
+        $this->repository->guardar($data);
                 
         $this->_redirect('/admin/catalogo/');    
         
@@ -99,7 +98,7 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
 
         $form = $this->_getForm();
 
-        $producto = $this->productoService->obtenerPorId($id);
+        $producto = $this->repository->obtenerPorId($id);
 
         $form->populate(array(
             'id' => $producto->getId(),
@@ -122,7 +121,7 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
         
         $id = (int) $this->getRequest()->getParam("id", 0);      
                 
-        $this->productoService->eliminar($id);
+        $this->repository->eliminar($id);
         
         $this->_redirect('/admin/catalogo/');
   

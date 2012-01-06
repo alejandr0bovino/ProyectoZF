@@ -2,14 +2,13 @@
 
 class Catalogo_IndexController extends ProyectoZF_Controller_Action
 {  
-    private $productoService;
+    private $repository;
     	
     public function init()
     {	
         parent::init();
                 
-        $this->productoService = $this->_helper->Service('Catalogo_Model_Service_Common');      
-     
+        $this->repository = new Catalogo_Model_Repository_Common();
     }
     
     public function preDispatch()
@@ -38,7 +37,7 @@ class Catalogo_IndexController extends ProyectoZF_Controller_Action
                 
         $this->view->titulo = $titulo;
         
-        $this->view->listaProducto = $this->productoService->obtenerTodos();
+        $this->view->listaProducto = $this->repository->obtenerTodos();
         
         $this->view->form = $this->_getForm();
     }
@@ -50,9 +49,9 @@ class Catalogo_IndexController extends ProyectoZF_Controller_Action
         if(0 >= $id){
                 $this->_redirect("/");
         }
-
-        $producto = $this->productoService->obtenerPorId($id);
-
+        
+        $producto = $this->repository->obtenerPorId($id);                
+        
         if(null === $producto){
                $this->_redirect("/");
         }       
@@ -81,7 +80,7 @@ class Catalogo_IndexController extends ProyectoZF_Controller_Action
                         
             $descripcion = $form->descripcion->getValue();
 
-            $this->view->listaProducto = $this->productoService->buscarPorDescripcion($descripcion);
+            $this->view->listaProducto = $this->repository->buscarPorDescripcion($descripcion);
                         
             $this->view->linkVolver = true;
 

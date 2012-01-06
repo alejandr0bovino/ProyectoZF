@@ -2,13 +2,13 @@
 
 class Usuarios_IndexController extends ProyectoZF_Controller_Action
 {
-    private $usuarioService;
+    private $repository;
 
     public function init()
     {
         parent::init();
         
-        $this->usuarioService = $this->_helper->Service('Usuarios_Model_Service_Common');
+        $this->repository = new Usuarios_Model_Repository_Common();
     }    
     
     public function preDispatch()
@@ -37,7 +37,7 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
                 
         $this->view->titulo = $titulo;
         
-        $this->view->listaUsuario = $this->usuarioService->obtenerTodos();
+        $this->view->listaUsuario = $this->repository->obtenerTodos();
         
         $this->view->form = $this->_getForm();
     }
@@ -50,7 +50,7 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
                 $this->_redirect("/");
         }
 
-        $usuario = $this->usuarioService->obtenerPorId($id);
+        $usuario = $this->repository->obtenerPorId($id);
 
         if(null === $usuario){
                 $this->_redirect("/");
@@ -84,7 +84,7 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
 
             $nombre = $form->nombre->getValue();
 
-            $this->view->listaUsuario = $this->usuarioService->buscarPorNombre($nombre);
+            $this->view->listaUsuario = $this->repository->buscarPorNombre($nombre);
 
             $this->view->linkVolver = true;
 

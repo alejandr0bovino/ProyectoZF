@@ -2,13 +2,13 @@
 
 class Admin_UsuarioController extends ProyectoZF_Controller_Action
 {   
-    private $usuarioService;
+    private $repository;
         
     public function init()
     {
         parent::init();
         
-        $this->usuarioService = $this->_helper->Service('Usuarios_Model_Service_Common');      
+        $this->repository = new Usuarios_Model_Repository_Common();      
     }
     
     public function preDispatch()
@@ -36,7 +36,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
                 
         $this->view->titulo = $titulo;
         
-        $this->view->listaUsuario = $this->usuarioService->obtenerTodos();
+        $this->view->listaUsuario = $this->repository->obtenerTodos();
     }
     
     public function crearAction()
@@ -74,7 +74,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
                 $form->passwordVerify->setRequired(false); 
             }             
             
-            $usuarioActual = $this->usuarioService->obtenerPorId($id);
+            $usuarioActual = $this->repository->obtenerPorId($id);
             $claveActual = $usuarioActual->getClave();        
         
         }
@@ -117,7 +117,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
             "clave" => $clave
         );        
         
-        $this->usuarioService->guardar($data);
+        $this->repository->guardar($data);
         
         $this->_redirect('/admin/usuario/');    
         
@@ -135,7 +135,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         $form->passwordVerify->addDecorator('Label', array('escape' => false, 'class' => 'passwordVerify'));        
         $form->passwordVerify->setLabel('Confirmar Nueva Clave');
                   
-        $usuario = $this->usuarioService->obtenerPorId($id);
+        $usuario = $this->repository->obtenerPorId($id);
 
         $form->populate(array(
             'id' => $usuario->getId(),
@@ -159,7 +159,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         
         $id = (int) $this->getRequest()->getParam("id", 0);
                         
-        $this->usuarioService->eliminar($id);
+        $this->repository->eliminar($id);
                 
         $this->_redirect('/admin/usuario/');
   

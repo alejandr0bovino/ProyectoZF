@@ -3,7 +3,7 @@
 //namespace Entity;
  
 /**
- * @Entity(repositoryClass="Usuarios_Model_Repository_Common")
+ * @Entity
  * @Table(name="usuarios")
  */
 

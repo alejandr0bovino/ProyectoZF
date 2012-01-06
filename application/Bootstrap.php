@@ -69,19 +69,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //        
 //          return $autoloader;
 //    }
-
-    
-    public function _initActionHelpers()
-    {
-        $this->bootstrap('doctrine');
-        $em = $this->getResource('doctrine');
-
-        HelperBroker::addHelper(new Service($em));
-    }
-    
-    
  
-    
     protected function _initTranslate()
     {
         $locale = new Zend_Locale('es_ES');
@@ -108,6 +96,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $acl;
    
     }  
+    
+    protected function _initLayout()
+    {
+        $resource = $this->getPluginResource("layout");
+        $layout = $resource->init();
+
+        if ($this->hasResource('config')) {
+            
+            $config = $this->getResource('config');
+            $layout->titulo = $config->parametros->titulo;              
+            
+        }
+
+        return $layout;
+    }    
     
     protected function _initView() 
     {
@@ -144,22 +147,4 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $view;
     }
     
-    protected function _initLayout()
-    {
-        $resource = $this->getPluginResource("layout");
-        $layout = $resource->init();
-
-        if ($this->hasResource('config')) {
-            
-            $config = $this->getResource('config');
-            $layout->titulo = $config->parametros->titulo;              
-            
-        }
-
-        return $layout;
-    }    
- 
-    
-  
-
-}
+}  
