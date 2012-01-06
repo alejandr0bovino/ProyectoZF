@@ -12,6 +12,6 @@
 */
 
 root { 
-    display: block;
+    display: block; float:none
 }
 
