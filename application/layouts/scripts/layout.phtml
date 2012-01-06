@@ -1,0 +1,44 @@
+<?php echo $this->doctype() ?>
+
+<html>
+    
+<head>
+<?php echo $this->headTitle() ?>
+    
+<?php echo $this->headMeta() ?>
+    
+<?php
+    $this->headLink()->appendStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');
+    echo $this->headLink();
+ ?>  
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <?php echo $this->render('header.phtml') ?> 
+        
+        <section>
+            
+            <div class="content">
+            
+                <!-- Login -->
+                <?php if($this->layout()->mensaje !== null): ?>
+                    <div class="loginMensaje <?php echo $this->layout()->estado ?>">
+                        <?php echo $this->layout()->mensaje; ?>
+                    </div>
+                <?php endif; ?>
+                <!-- //Login -->
+            
+                <?php echo $this->layout()->content ?>
+            
+            </div>
+            
+        </section>
+        
+        <?php echo $this->render('footer.phtml') ?>    
+
+    </div>
+</body>
+
+</html>

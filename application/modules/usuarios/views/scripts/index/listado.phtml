@@ -1,0 +1,103 @@
+<h3><?php echo $this->titulo ?></h3>
+
+<section id="busquedaUsuarios">
+    
+    <div class="busquedaUsuarios_wrapper clearfix">
+
+        <?php if ($this->linkVolver) : ?>
+
+            <div class="left">
+                <ul class="actionList clearfix">
+                    <li><a href="<?php echo $this->baseUrl ?>/usuarios/"><span>Volver al listado</span></a></li>
+                </ul>
+            </div>
+
+        <?php endif; ?>
+
+        <div class="right">
+
+            <?php //if (isset($this->errors['nombre'])) : ?>
+
+            <!--<div  class="form-errors">
+                     <?php //foreach ($this->errors['nombre'] as $e) :?>
+                        <?php //echo $e ?>
+                     <?php //endforeach ?>
+                </div>-->
+
+            <?php //endif ?>
+
+            <div id="form-errors">
+                Ingrese un valor para la búsqueda 
+            </div>
+
+            <?php echo $this->form ?>
+
+        </div>
+
+    </div>    
+    
+</section>
+
+<hr />
+
+<?php if(count($this->listaUsuario) > 0): ?>
+
+    <table class="list">
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <?php if ( $this->verEmails ) : ?>
+                    <th>Email</th>
+                <?php endif; ?>
+                <th>Comentarios hechos en Productos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach($this->listaUsuario as $usuario): ?>
+
+                <tr>
+                    <td><?php echo $usuario->getNombre() ?></td>
+                    <td><?php echo $usuario->getApellido() ?></td>
+                    <?php if ( $this->verEmails ) : ?>                    
+                    <td><?php echo $usuario->getEmail() ?></td>
+                    <?php endif; ?>
+                    <td class="productComments">
+                        <?php if(count($usuario->getComentarios()) > 0): ?>
+                            <ol>
+                            <?php foreach ($usuario->getComentarios() as $comentario): ?>
+                               <li><?php echo $comentario->getComentario() ?></li>
+                            <?php endforeach; ?>
+                            </ol>
+                        <?php else: ?>
+                            <small>no comments</small>
+                        <?php endif;?>
+
+                    </td>                         
+                    <td class="action"><a href="<?php echo $this->baseUrl ?>/usuarios/index/ver/id/<?php echo $usuario->getId() ?>/"><span>ver</span></a></td>
+                </tr>
+
+            <?php endforeach; ?>
+        </tbody>        
+
+    </table>
+
+<?php else: ?>
+
+    <p>Usuarios <strong>no</strong> encontrados en el sistema.</p>
+    
+<?php endif;?>
+
+<script type="text/javascript">
+    <!--
+        document.forms["busqueda-usuarios"].onsubmit = function(){
+            if ( this.elements["nombre"].value.length < 2 ) {
+                document.getElementById("form-errors").style.display = "block";
+                return false;
+            }
+        }
+    -->
+</script>

@@ -1,0 +1,21 @@
+<h3><?php echo $this->titulo; ?></h3>
+<hr />
+<p>
+    <strong>Nombre:</strong>
+    <?php echo $this->usuario->getNombre() ?>
+</p>
+<p>
+    <strong>Apellido:</strong>
+    <?php echo $this->usuario->getApellido() ?>
+</p>
+<?php if ( $this->verEmails ) : ?>
+    <p>
+        <strong>Email:</strong>
+        <?php echo $this->usuario->getEmail() ?>
+    </p>
+<?php endif; ?>
+<hr />
+
+<ul class="actionList clearfix">
+    <li><a href="<?php echo $this->baseUrl ?>/usuarios/"><span>Volver al listado</span></a></li>
+</ul>

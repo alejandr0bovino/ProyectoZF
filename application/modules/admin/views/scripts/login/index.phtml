@@ -1,0 +1,24 @@
+<?php if(!$this->loggedIn):?>
+    
+    <h3><?php echo $this->titulo; ?></h3>
+    <hr />
+    <?php if(isset($this->responseLogin)):?>
+    
+        <p><?php echo $this->responseLogin;?></p>
+
+    <?php endif;?>
+
+    <?php if (isset($this->errors)) : ?>
+       <div class="form-errors form-errors-login">
+            <?php foreach ($this->errors as $e => $v) :?>
+                <span><?php echo($e) . ":" ?></span>
+                <?php foreach ($v as $n => $m): ?>
+                    <?php echo $m; break 2; ?><br />
+                <?php endforeach ?>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+    
+    <?php echo $this->form ?> 
+
+<?php endif;?>

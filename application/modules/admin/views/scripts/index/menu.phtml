@@ -1,0 +1,13 @@
+<h3><?php echo $this->titulo ?></h3>
+<hr />
+<p>Bienvenido <strong><?php echo $this->user->nombre;?> <?php echo $this->user->apellido;?></strong></p>
+<hr />
+<ul class="actionList clearfix">
+    <li><a href="<?php echo $this->baseUrl ?>/admin/usuario/"><span>Administrar Usuarios</span></a></li>
+    <li><a href="<?php echo $this->baseUrl ?>/admin/usuario/crear/"><span>Nuevo Usuario</span></a></li>   
+</ul>
+<hr />
+<ul class="actionList clearfix">
+    <li><a href="<?php echo $this->baseUrl ?>/admin/catalogo/"><span>Administrar Productos</span></a></li>
+    <li><a href="<?php echo $this->baseUrl ?>/admin/catalogo/crear/"><span>Nuevo Producto</span></a></li>    
+</ul>

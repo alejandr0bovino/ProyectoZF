@@ -1,0 +1,17 @@
+<header>
+    <div class="header">
+        <h1><a href="<?php echo $this->baseUrl ?>/">BDI -> <?php echo $this->layout()->titulo; ?> <span>&#8629</span></a></h1>
+        <div class="menu clearfix">
+            <div class="left">
+                <a href="<?php echo $this->baseUrl; ?>/">Inicio</a> 
+                &nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
+                <a href="<?php echo $this->baseUrl; ?>/usuarios/">Usuarios</a>
+                &nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
+                <a href="<?php echo $this->baseUrl; ?>/catalogo/">Catálogo</a>                
+            </div>
+            <div class="right">                
+                <?php echo $this->AdminLogin() ?>
+            </div>
+        </div>
+    </div>    
+</header>    

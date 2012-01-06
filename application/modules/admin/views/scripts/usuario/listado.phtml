@@ -1,0 +1,58 @@
+<div class="clearfix">
+
+    <div class="left">
+
+        <h3><?php echo $this->titulo; ?></h3>
+
+    </div>
+
+    <div class="right">
+
+        <ul class="actionList clearfix">
+            <li><a href="<?php echo $this->baseUrl ?>/admin/"><span>Admin Menú</span></a></li>            
+            <li><a href="<?php echo $this->baseUrl ?>/admin/usuario/crear/"><span>Nuevo Usuario</span></a></li>
+        </ul>
+
+    </div>
+
+</div>
+
+<hr />
+
+<?php if(count($this->listaUsuario) > 0): ?>
+
+    <table class="list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Clave</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <?php foreach($this->listaUsuario as $usuario): ?>
+
+                <tr>
+                    <td><?php echo $usuario->getId() ?></td>
+                    <td><?php echo $usuario->getNombre() ?></td>
+                    <td><?php echo $usuario->getApellido() ?></td>
+                    <td><?php echo $usuario->getEmail() ?></td>
+                    <td><?php echo $usuario->getClave() ?></td>
+                    <td class="action"><a href="<?php echo $this->baseUrl ?>/admin/usuario/editar/id/<?php echo $usuario->getId() ?>/"><span>editar</span></a></td>
+                    <td class="action"><a onclick="return confirm('¿Esta seguro que desea eliminar a <?php echo $usuario->getNombre() . " " . $usuario->getApellido() ?> ?');" href="<?php echo $this->baseUrl ?>/admin/usuario/eliminar/id/<?php echo $usuario->getId() ?>/"><span>eliminar</span></a></td>
+                </tr>
+
+            <?php endforeach; ?>
+        </tbody>
+        
+    </table>
+
+<?php else: ?>
+
+    <p>Lo sentimos, productos <strong>no</strong> encontrado en el sistema</p>
+    
+<?php endif;?>

@@ -1,0 +1,69 @@
+<div class="clearfix">
+
+    <div class="left">
+
+        <h3><?php echo $this->titulo; ?></h3>
+
+    </div>
+
+    <div class="right">
+
+        <ul class="actionList clearfix">
+            <li><a href="<?php echo $this->baseUrl ?>/admin/"><span>Admin Menú</span></a></li>            
+            <li><a href="<?php echo $this->baseUrl ?>/admin/catalogo/crear/"><span>Nuevo Producto</span></a></li>
+        </ul>
+
+    </div>
+
+</div>
+
+<hr />
+
+<?php if(count($this->listaProducto) > 0): ?>
+
+    <table class="list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th> 
+                <th>Comentarios</th> 
+                <th colspan="2">Acciones</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <?php foreach($this->listaProducto as $producto): ?>
+
+                <tr>
+                    <td><?php echo $producto->getId() ?></td>
+                    <td><?php echo $producto->getDescripcion() ?></td>
+                    <td><?php echo $producto->getPrecio() ?></td>
+                    <td><?php echo $producto->getCantidad() ?></td>
+                    <td class="productComments"">
+                        <?php if(count($producto->getComentarios()) > 0): ?>
+                            <ol>
+                            <?php foreach ($producto->getComentarios() as $comentario): ?>
+                               <li><?php echo $comentario->getComentario() ?></li>
+                            <?php endforeach; ?>
+                            </ol>
+                        <?php else: ?>
+                            <small>no comments</small>
+                        <?php endif;?>
+                        
+                    </td>
+                    <td class="action"><a href="<?php echo $this->baseUrl ?>/admin/catalogo/editar/id/<?php echo $producto->getId() ?>/"><span>editar</span></a></td>
+                    <td class="action"><a onclick="return confirm('¿Esta seguro que desea eliminar a <?php echo $producto->getDescripcion() ?> ?');" href="<?php echo $this->baseUrl ?>/admin/catalogo/eliminar/id/<?php echo $producto->getId() ?>/"><span>eliminar</span></a></td>
+                </tr>
+
+            <?php endforeach; ?>
+        </tbody>
+        
+    </table>
+
+<?php else: ?>
+
+    <p>Lo sentimos, productos <strong>no</strong> encontrado en el sistema</p>
+    
+<?php endif;?>

@@ -1,0 +1,22 @@
+<h3><?php echo $this->titulo; ?></h3>
+<hr />
+<p>
+    <strong>Descripción:</strong>
+    <?php echo $this->producto->getDescripcion() ?>
+</p>
+<?php if ( $this->verPrecios ) : ?>
+    <p>
+        <strong>Precio:</strong>
+        <?php echo $this->producto->getPrecio() ?>
+    </p>
+<?php endif; ?>
+<p>
+    <strong>Cantidad:</strong>
+    <?php echo $this->producto->getCantidad() ?>
+</p>
+
+<hr />
+
+<ul class="actionList clearfix">
+    <li><a href="<?php echo $this->baseUrl ?>/catalogo/"><span>Volver al listado</span></a></li>
+</ul>
