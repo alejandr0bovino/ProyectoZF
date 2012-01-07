@@ -1,8 +1,14 @@
 <?php
 
+
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library')   
+)));
+echo get_include_path();
 
 // Define application environment
 defined('APPLICATION_ENV')
