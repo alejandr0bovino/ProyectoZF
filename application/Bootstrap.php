@@ -59,16 +59,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('em', $em);
         return $em;
     }
-   
+    
 //    protected function _initAutoload()
 //    {
 //        $autoloader = new Zend_Application_Module_Autoloader(array(
-//            'namespace' => '',
-//            'basePath' => APPLICATION_PATH . '/modules/',
-//            ));
-//        
-//          return $autoloader;
+//            'namespace' => 'Default',
+//            'basePath'  => dirname(__FILE__),
+//        ));
+//        return $autoloader;
 //    }
+    
  
     protected function _initTranslate()
     {
@@ -110,16 +110,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
 
         return $layout;
-    }    
+    }       
     
-    protected function _initView() 
+    protected function _initView()
     {
-        $this->bootstrap('FrontController');
-        $front = $this->getResource('FrontController');
-        $request = new Zend_Controller_Request_Http();
-        $front->setRequest($request);
-
-        $view = new Zend_view();
+        $view = new Zend_View();
         
         if ($this->hasResource('config')) {
             $config = $this->getResource('config');  
@@ -135,16 +130,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 $view->headLink()->appendStylesheet($view->baseUrl() . (String)$val);
             }       
             
-            $view->addHelperPath('ProyectoZF/View/Helper/', 'ProyectoZF_View_Helper');
-        }
+        }        
         
-        
-        
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
-        
+        $view->addHelperPath('ProyectoZF/View/Helper/', 'ProyectoZF_View_Helper');                
+                
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
+            'ViewRenderer'
+        );
+		
         $viewRenderer->setView($view);
-        
+
         return $view;
-    }
+    }    
     
 }  
