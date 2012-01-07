@@ -2,6 +2,7 @@ application/configs/application.ini
 library/Doctrine/
 library/Zend/
 nbproject/
+public/
 tests/
 .zfproject.xml
 .gitignore
