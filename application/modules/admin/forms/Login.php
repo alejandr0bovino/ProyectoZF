@@ -18,8 +18,20 @@ class Admin_Form_Login extends Zend_Form
         $email->setLabel('E-mail')
             ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => 'Requerido')))
             ->addValidator(new ProyectoZF_Validate_Email())
-            ->setRequired(true);
-
+            ->setRequired(true)
+            ->setDecorators(array(
+            array('ViewHelper'),
+            array('Errors'),
+            array('Description'),
+            array('Label', array(
+                'requiredSuffix' => ' *',
+                'escape' => false,
+                'separator' => ' ')),
+            array('HtmlTag', array(
+                'tag' => 'fieldset',
+                'class' => 'element_form required clearfix'))));        
+        
+        
         $password = $this->createElement('password', 'password');
         
         $password->setLabel('Clave')
@@ -29,7 +41,18 @@ class Admin_Form_Login extends Zend_Form
                 'stringLengthTooShort' => 'Valor demasiado corto, al menos %min% caracteres',
                 'stringLengthTooLong' => 'Valor demasiado largo, máximo %max% caracteres'
                 )))
-            ->setRequired(true);
+            ->setRequired(true)
+            ->setDecorators(array(
+            array('ViewHelper'),
+            array('Errors'),
+            array('Description'),
+            array('Label', array(
+                'requiredSuffix' => ' *',
+                'escape' => false,
+                'separator' => ' ')),
+            array('HtmlTag', array(
+                'tag' => 'fieldset',
+                'class' => 'element_form required clearfix'))));
 
 
         $this->addElement($email)
@@ -44,17 +67,7 @@ class Admin_Form_Login extends Zend_Form
                 'class' => 'loginForm'))
             ->addDecorator('Form');
 
-        $this->setElementDecorators(array(
-            array('ViewHelper'),
-            array('Errors'),
-            array('Description'),
-            array('Label', array(
-                'requiredSuffix' => ' *',
-                'escape' => false,
-                'separator' => ' ')),
-            array('HtmlTag', array(
-                'tag' => 'fieldset',
-                'class' => 'element_form clearfix'))));
+
 
         $this->login->setDecorators(array(
             array('ViewHelper'),

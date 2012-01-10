@@ -12,6 +12,10 @@ class Default_IndexController extends ProyectoZF_Controller_Action
         $this->view->titulo = $this->_config->parametros->mvc->default->index->index->titulo;
         
     }
+    
+    public function demoJqueryUiAction(){
+        
+    }
 
 }
 

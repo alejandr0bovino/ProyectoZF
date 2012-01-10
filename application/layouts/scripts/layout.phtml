@@ -8,9 +8,13 @@
 <?php echo $this->headMeta() ?>
     
 <?php
-    $this->headLink()->appendStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');
+    $this->headLink()->prependStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');
     echo $this->headLink();
  ?>  
+
+<?php
+    $this->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+    echo $this->headScript() ?>
 </head>
 
 <body>

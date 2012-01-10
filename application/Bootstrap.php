@@ -35,7 +35,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         return null;
 
-        
     }
     
     protected function _initDoctrine()
@@ -59,16 +58,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('em', $em);
         return $em;
     }
-    
-//    protected function _initAutoload()
-//    {
-//        $autoloader = new Zend_Application_Module_Autoloader(array(
-//            'namespace' => 'Default',
-//            'basePath'  => dirname(__FILE__),
-//        ));
-//        return $autoloader;
-//    }
-    
+   
  
     protected function _initTranslate()
     {
@@ -125,10 +115,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
             $view->headMeta()->appendHttpEquiv('Content-Language', 'es-ES');
             
-            $headLinksUrl = $config->parametros->css->toArray();
-            foreach ($headLinksUrl as $val) {
+            $headLinksUrls = $config->parametros->css->toArray();
+            foreach ($headLinksUrls as $val) {
                 $view->headLink()->appendStylesheet($view->baseUrl() . (String)$val);
-            }       
+            } 
+            
+            $headScriptsUrls = $config->parametros->js->toArray();
+            foreach ($headScriptsUrls as $val) {
+                $view->headScript()->appendFile($view->baseUrl() . (String)$val);
+            }             
             
         }        
         
