@@ -19,6 +19,7 @@ class Admin_Form_Login extends Zend_Form
             ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => 'Requerido')))
             ->addValidator(new ProyectoZF_Validate_Email())
             ->setRequired(true)
+            ->setOptions(array('class'=>'verifyMail'))
             ->setDecorators(array(
             array('ViewHelper'),
             array('Errors'),
@@ -42,6 +43,7 @@ class Admin_Form_Login extends Zend_Form
                 'stringLengthTooLong' => 'Valor demasiado largo, máximo %max% caracteres'
                 )))
             ->setRequired(true)
+            ->setOptions(array('class'=>'verifyPassword'))
             ->setDecorators(array(
             array('ViewHelper'),
             array('Errors'),
