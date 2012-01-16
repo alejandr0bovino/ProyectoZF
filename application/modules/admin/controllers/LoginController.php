@@ -7,12 +7,15 @@ class Admin_LoginController extends ProyectoZF_Controller_Action
     public function init()
     {
         parent::init();
+        
         $this->_login = new Admin_Model_Login();
         
+        $this->view->headScript()->prependFile($this->view->baseUrl. '/js/jquery.form-validation-and-hints.js');
+        $this->view->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
     }
  
     public function indexAction()
-    {
+    {         
         
          if (Admin_Model_Login::isLoggedIn()) {
             

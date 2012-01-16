@@ -15,5 +15,9 @@ class ProyectoZF_Controller_Action extends Zend_Controller_Action
         $this->_acl = $aclPlugin->getAcl();
         $this->_role = $aclPlugin->getRoleName();
   
+        $this->view->addHelperPath('ZendX/JQuery/View/Helper','ZendX_JQuery_View_Helper');
+        $this->view->jQuery()
+                         ->setVersion('1.7.1')
+                         ->setUiVersion('1.8.17');        
     }    
 }

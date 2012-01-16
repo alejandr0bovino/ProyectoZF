@@ -8,7 +8,7 @@ class Admin_CatalogoController extends ProyectoZF_Controller_Action
     {
         parent::init();
                 
-        $this->repository = new Catalogo_Model_Repository_Common();
+        $this->repository = $this->_helper->Em('Catalogo_Model_Repository_Common');
     }
     
     public function preDispatch()

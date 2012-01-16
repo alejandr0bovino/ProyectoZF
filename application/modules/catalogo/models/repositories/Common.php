@@ -5,11 +5,11 @@
 class Catalogo_Model_Repository_Common 
 {
     protected $_em;
-    
-    public function __construct() 
+
+    public function __construct($em)
     {
-        $this->_em = Zend_Registry::get('em');
-    }      
+        $this->_em = $em;
+    }    
     
     public function obtenerTodos() 
     {

@@ -15,7 +15,8 @@ class ProyectoZF_Acl  extends Zend_Acl {
             ->addResource(new Zend_Acl_Resource('admin:index'))
             ->addResource(new Zend_Acl_Resource('admin:login'))
             ->addResource(new Zend_Acl_Resource('admin:usuario'))
-            ->addResource(new Zend_Acl_Resource('admin:catalogo'));
+            ->addResource(new Zend_Acl_Resource('admin:catalogo'))
+            ->addResource(new Zend_Acl_Resource('admin:ajax'));
 
         $this->allow('invitado', 'error')
             ->allow('invitado', 'index')

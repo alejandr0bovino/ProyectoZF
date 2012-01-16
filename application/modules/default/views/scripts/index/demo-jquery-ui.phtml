@@ -5,6 +5,34 @@
 <h3>Components:</h3>
 
 <div class="demo-jquery-ui">
+    
+    <h4 class="demoHeaders">ZendX</h4>
+    Date_ <br />
+    <?php echo $this->datePicker( 
+            'dpi',
+            '');
+    ?>
+    <br /><br />
+    Autocomplete_ try "u" <br />
+    <form method="post" action="#">
+
+        <?php
+            echo $this->autoComplete(
+                "location",
+                "",
+                array('source' => array (
+                    'Ucrania',
+                    'Uganda',
+                    'Uruguay',
+                    'Uuuuu'
+                    ))
+
+            );
+        ?>
+
+
+    </form>
+
     <!-- Accordion -->
     <h4 class="demoHeaders">Accordion</h4>
     <div id="accordion">
@@ -40,24 +68,11 @@
     <p><a href="#" id="dialog_link" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>Open Dialog</a></p>
 
 
-    <h4 class="demoHeaders">Overlay and Shadow Classes <em>(not currently used in UI widgets)</em></h4>
-    <div style="position: relative; height: 200px; padding:1% 4% 5%; overflow:hidden; background-color: white; color:black" class="fakewindowcontain">
-            <p>Lorem ipsum dolor sit amet,  Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. </p><p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. </p><p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. </p><p>Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. </p><p>Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. </p>
-
-            <!-- ui-dialog -->
-            <div class="ui-overlay"><div class="ui-widget-overlay"></div><div class="ui-widget-shadow ui-corner-all" style="width: 302px; height: 152px; position: absolute; left: 50px; top: 30px;"></div></div>
-            <div style="position: absolute; width: 280px; height: 130px;left: 50px; top: 30px; padding: 10px;" class="ui-widget ui-widget-content ui-corner-all">
-                    <div class="ui-dialog-content ui-widget-content" style="background: none; border: 0;">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ni.</p>
-                    </div>
-            </div>
-
-    </div>
 
 
     <!-- ui-dialog -->
     <div id="dialog" title="Dialog Title">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>aaaaaaaaaaaaaa Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
 
 
@@ -260,17 +275,13 @@
     </ul>
 
 
-    <!-- Slider -->
-    <h4 class="demoHeaders">Slider</h4>
-    <div id="slider"></div>
+   
 
     <!-- Datepicker -->
     <h4 class="demoHeaders">Datepicker</h4>
     <div id="datepicker"></div>
 
-    <!-- Progressbar -->
-    <h4 class="demoHeaders">Progressbar</h4>	
-    <div id="progressbar"></div>
+   
 
     <!-- Highlight / Error -->
     <h4 class="demoHeaders">Highlight / Error</h4>
@@ -290,57 +301,3 @@
 
 </div>
 
-<script type="text/javascript">
-    $(function(){
-
-        // Accordion
-        $("#accordion").accordion({ header: "h3" });
-
-        // Tabs
-        $('#tabs').tabs();
-
-
-        // Dialog			
-        $('#dialog').dialog({
-                autoOpen: false,
-                width: 600,
-                buttons: {
-                        "Ok": function() { 
-                                $(this).dialog("close"); 
-                        }, 
-                        "Cancel": function() { 
-                                $(this).dialog("close"); 
-                        } 
-                }
-        });
-
-        // Dialog Link
-        $('#dialog_link').click(function(){
-                $('#dialog').dialog('open');
-                return false;
-        });
-
-        // Datepicker
-        $('#datepicker').datepicker({
-                inline: true
-        });
-
-        // Slider
-        $('#slider').slider({
-                range: true,
-                values: [17, 67]
-        });
-
-        // Progressbar
-        $("#progressbar").progressbar({
-                value: 20 
-        });
-
-        //hover states on the static widgets
-        $('#dialog_link, ul#icons li').hover(
-                function() { $(this).addClass('ui-state-hover'); }, 
-                function() { $(this).removeClass('ui-state-hover'); }
-        );
-
-    });
-</script>    

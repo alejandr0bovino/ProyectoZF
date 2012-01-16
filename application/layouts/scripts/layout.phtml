@@ -1,23 +1,24 @@
-<?php echo $this->doctype() ?>
-
-<html>
+<?php echo $this->doctype() . "\n" ?>
+<!--[if lt IE 7]> <html class="ie6 oldie" lang="es"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie" lang="es"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie" lang="es"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="es"> <!--<![endif]-->
     
 <head>
-<?php echo $this->headTitle() ?>
     
-<?php echo $this->headMeta() ?>
-    
+<?php echo $this->headTitle() . "\n" ?>
+<?php echo $this->headMeta() . "\n" ?>
 <?php
-    $this->headLink()->prependStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');
+    if ( $this->JQuery()->isEnabled() )
+        $this->headLink()->prependStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/eggplant/jquery-ui.css');
+    $this->headLink()->prependStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');    
     echo $this->headLink();
  ?>  
 
-<?php
-    $this->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
-    echo $this->headScript() ?>
-</head>
 
+</head>
 <body>
+
     <div class="wrapper">
 
         <?php echo $this->render('header.phtml') ?> 
@@ -43,6 +44,15 @@
         <?php echo $this->render('footer.phtml') ?>    
 
     </div>
-</body>
+    
+<?php echo $this->JQuery()->clearOnLoadActions() ?>
+<?php echo $this->headScript() . "\n" ?>
 
+    
+    <!--[if lt IE 7 ]>
+        <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+        <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+    <![endif]-->
+        
+</body>
 </html>

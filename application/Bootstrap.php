@@ -5,7 +5,7 @@ use Doctrine\ORM\Configuration,
     Doctrine\Common\Cache\ApcCache;
 
 use Zend_Controller_Action_HelperBroker as HelperBroker,
-    ProyectoZF\Controller\Action\Helper\Service;
+    ProyectoZF\Controller\Action\Helper\Em;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -58,7 +58,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('em', $em);
         return $em;
     }
-   
+    
+    public function _initActionHelpers()
+    {
+        $this->bootstrap('doctrine');
+        $em = $this->getResource('doctrine');
+
+        HelperBroker::addHelper(new Em($em));
+    }   
  
     protected function _initTranslate()
     {
@@ -104,6 +111,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initView()
     {
+        // for $view->baseUrl()
+        $this->bootstrap('FrontController');
+        $front = $this->getResource('FrontController');
+        $request = new Zend_Controller_Request_Http();
+        $front->setRequest($request);
+        //
+        
         $view = new Zend_View();
         
         if ($this->hasResource('config')) {
@@ -113,6 +127,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headTitle($config->parametros->titulo);
             $view->headTitle()->setSeparator(' - ');
             $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+            $view->headMeta()->appendHttpEquiv('X-UA-Compatible', 'IE=Edge;chrome=1');
             $view->headMeta()->appendHttpEquiv('Content-Language', 'es-ES');
             
             $headLinksUrls = $config->parametros->css->toArray();
@@ -129,10 +144,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $view->addHelperPath('ProyectoZF/View/Helper/', 'ProyectoZF_View_Helper');                
                 
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
-            'ViewRenderer'
-        );
-		
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
 
         return $view;

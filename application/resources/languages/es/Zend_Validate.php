@@ -262,5 +262,9 @@ return array(
     "Invalid type given, value should be a string" => "El tipo especificado es incorrecto, el valor deberí­a ser una cadena de texto",
     "'%value%' is less than %min% characters long" => "'%value%' tiene menos de '%min%' caracteres",
     "'%value%' is more than %max% characters long" => "'%value%' tiene más de '%max%' caracteres",
+    
+    // Zend_Validate_Db_NoRecordExists
+    "No record matching '%value%' was found" => "El registro '%value%' no fue encontrado",
+    "A record matching '%value%' was found" => "El registro '%value%' pertenece al sistema",
 );
 

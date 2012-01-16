@@ -6,11 +6,13 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         
     public function init()
     {
-        parent::init();
+        parent::init();    
         
-        $this->repository = new Usuarios_Model_Repository_Common();      
-    }
-    
+        //$this->repository = new Usuarios_Model_Repository_Common(); 
+        $this->repository = $this->_helper->Em('Usuarios_Model_Repository_Common');
+             
+    }   
+
     public function preDispatch()
     {
         if (!Admin_Model_Login::isLoggedIn()) {          
@@ -41,6 +43,8 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
     
     public function crearAction()
     {
+        $this->_addScriptCheckEmail();
+        
         $titulo = $this->_config->parametros->mvc->admin->usuario->crear->titulo;
         $this->view->headTitle()->prepend($titulo);
         $this->view->titulo = $titulo;
@@ -55,6 +59,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
     
     public function guardarAction()
     {
+        
         if ( !$this->getRequest()->isPost() ) {
             return $this->_forward('index');
         }
@@ -66,16 +71,28 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         
         $postParams = $this->_request->getPost();
         $id = $postParams['id'] > 0 ? $postParams['id'] : 0;
+        
+        $this->_addScriptCheckEmail($id);
 
         if ( $id > 0 ) {
-            
+                                    
             if ( $postParams["passwordVerify"] == null && $postParams["password"] == null ) {            
                 $form->password->setRequired(false); 
                 $form->passwordVerify->setRequired(false); 
             }             
             
             $usuarioActual = $this->repository->obtenerPorId($id);
-            $claveActual = $usuarioActual->getClave();        
+            $nombreActual = $usuarioActual->getNombre();
+            $emailActual = $usuarioActual->getEmail();
+            $claveActual = $usuarioActual->getClave();
+            
+            
+            if ( $postParams["nombre"] == $nombreActual ) {            
+                $form->nombre->removeValidator('Zend_Validate_Db_NoRecordExists');                
+            }   
+            if ( $postParams["email"] == $emailActual ) {            
+                $form->email->removeValidator('Zend_Validate_Db_NoRecordExists');                
+            }               
         
         }
                 
@@ -84,10 +101,36 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         if ( !$form->isValid($postParams) ) {
                     
             if ( $id > 0 ) { 
-                 
+                
                 $form->password->setLabel('Nueva Clave');
-                $form->passwordVerify->setLabel('Confirmar Nueva Clave');                                
-                $form->passwordText->setValue($claveActual);    
+                $form->passwordVerify->setLabel('Confirmar Nueva Clave');
+                
+                if ( $form->password->getValue()!= null || $form->passwordVerify->getValue()!= null ) {
+                    
+                    $form->password->setOptions(array('class' => 'verifyPassword'))
+                            ->addDecorator('HtmlTag', array(
+                                        'tag' => 'fieldset',
+                                        'class' => 'element_form required clearfix'));
+
+                    $form->passwordVerify->setOptions(array('class' => 'verifyPasswordConfirm'))
+                            ->addDecorator('HtmlTag', array(
+                                        'tag' => 'fieldset',
+                                        'class' => 'element_form required clearfix'));   
+                  
+                } else {
+
+                    $form->password->setOptions(array('class' => 'optionalElement'))
+                            ->addDecorator('HtmlTag', array(
+                                        'tag' => 'fieldset',
+                                        'class' => 'element_form clearfix'));
+
+                    $form->passwordVerify->setOptions(array('class' => 'optionalElement'))
+                            ->addDecorator('HtmlTag', array(
+                                        'tag' => 'fieldset',
+                                        'class' => 'element_form clearfix'));                    
+                }
+
+                $form->passwordText->setValue($claveActual);                
                 
                 $titulo = $this->_config->parametros->mvc->admin->usuario->editar->titulo;
                 $this->view->headTitle()->prepend($titulo);                
@@ -127,13 +170,24 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
     {
 
         $id = (int) $this->getRequest()->getParam("id", 0);
-
+        $this->_addScriptCheckEmail($id);
+        
         $form = $this->_getForm();
 
-        $form->password->addDecorator('Label', array('escape' => false)); 
-        $form->password->setLabel('Nueva Clave');
-        $form->passwordVerify->addDecorator('Label', array('escape' => false, 'class' => 'passwordVerify'));        
-        $form->passwordVerify->setLabel('Confirmar Nueva Clave');
+        $form->password->addDecorator('Label', array('escape' => false))
+                ->setLabel('Nueva Clave')
+                ->setOptions(array('class' => 'optionalElement'))
+                ->addDecorator('HtmlTag', array(
+                            'tag' => 'fieldset',
+                            'class' => 'element_form clearfix'));
+                
+        
+        $form->passwordVerify->addDecorator('Label', array('escape' => false, 'class' => 'passwordVerify'))
+                ->setLabel('Confirmar Nueva Clave')
+                ->setOptions(array('class' => 'optionalElement'))
+                ->addDecorator('HtmlTag', array(
+                            'tag' => 'fieldset',
+                            'class' => 'element_form clearfix'));
                   
         $usuario = $this->repository->obtenerPorId($id);
 
@@ -170,5 +224,15 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         return new Admin_Form_Usuario();
     }
     
+    private function _addScriptCheckEmail($id = 0) {
+    
+        $this->view->headScript()->prependFile($this->view->baseUrl. '/js/jquery.form-validation-and-hints.js');        
+        $this->view->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+        $this->view->headScript()->captureStart();
+        echo '         var baseUrl = "'. $this->view->baseUrl .'", usuarioId = "'. $id .'";'. PHP_EOL;
+        $this->view->headScript()->captureEnd() ;
+        $this->view->headScript()->appendFile($this->view->baseUrl .'/js/checkEmail.js');      
+
+    }    
 }
 

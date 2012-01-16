@@ -8,7 +8,8 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
     {
         parent::init();
         
-        $this->repository = new Usuarios_Model_Repository_Common();
+        //$this->repository = new Usuarios_Model_Repository_Common();
+        $this->repository = $this->_helper->Em('Usuarios_Model_Repository_Common');
     }    
     
     public function preDispatch()

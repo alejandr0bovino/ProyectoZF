@@ -4,12 +4,19 @@
  
 class Usuarios_Model_Repository_Common 
 {
-    protected $_em;
+/*  protected $_em;
     
     public function __construct() 
     {
         $this->_em = Zend_Registry::get('em');
     }  
+  */
+    protected $_em;
+
+    public function __construct($em)
+    {
+        $this->_em = $em;
+    }
     
     public function obtenerTodos() 
     {
@@ -21,8 +28,13 @@ class Usuarios_Model_Repository_Common
     {
         $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.nombre = '$nombre'";
         return $this->_em->createQuery($q)->getResult();
-    }    
-
+    }   
+    
+    public function buscarPorEmail($email)
+    {
+        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.email = '$email'";
+        return $this->_em->createQuery($q)->getResult();
+    }       
     
     public function obtenerPorId($id)
     {         
