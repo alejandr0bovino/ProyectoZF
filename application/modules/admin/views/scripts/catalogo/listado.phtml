@@ -41,7 +41,7 @@
                     <td><?php echo $producto->getDescripcion() ?></td>
                     <td><?php echo $producto->getPrecio() ?></td>
                     <td><?php echo $producto->getCantidad() ?></td>
-                    <td class="productComments"">
+                    <td class="productComments">
                         <?php if(count($producto->getComentarios()) > 0): ?>
                             <ol>
                             <?php foreach ($producto->getComentarios() as $comentario): ?>

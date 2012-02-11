@@ -7,7 +7,7 @@ class ProyectoZF_Controller_Action extends Zend_Controller_Action
         
     public function init()
     {
-	$this->view->baseUrl = $this->getRequest()->getBaseUrl();
+        $this->view->baseUrl = $this->getRequest()->getBaseUrl();
         $this->_config = Zend_Registry::get('config');
         
         $aclPlugin = Zend_Controller_Front::getInstance()->getPlugin('ProyectoZF_Controller_Plugin_Acl');
