@@ -1,5 +1,5 @@
 <?php
-Doctrine\DBAL\Types\Type::overrideType('datetime', 'ProyectoZF\DBAL\types\DateTimeType');
+Doctrine\DBAL\Types\Type::overrideType('datetime', 'ProyectoZF\DBAL\Types\DateTimeType');
 
 use Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
