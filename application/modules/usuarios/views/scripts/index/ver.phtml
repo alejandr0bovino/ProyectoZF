@@ -1,19 +1,38 @@
 <h3><?php echo $this->titulo; ?></h3>
+
 <hr />
-<p>
-    <strong>Nombre:</strong>
-    <?php echo $this->usuario->getNombre() ?>
-</p>
-<p>
-    <strong>Apellido:</strong>
-    <?php echo $this->usuario->getApellido() ?>
-</p>
-<?php if ( $this->verEmails ) : ?>
-    <p>
-        <strong>Email:</strong>
-        <?php echo $this->usuario->getEmail() ?>
-    </p>
-<?php endif; ?>
+
+<div class="usuarioVer clearfix">
+
+    <div class="usuarioFotoLarge left">
+        <div class="usuarioFotoLargeWrapper">
+            <img src="<?php echo $this->baseUrl ?>/<?php echo $this->fotoPath . $this->usuario->getFoto() ?>" alt="<?php echo $this->usuario->getUsuario() ?>" />    
+        </div>
+    </div>
+        
+    <div class="left">
+        <p>
+            <strong>Usuario:</strong>
+            <?php echo $this->usuario->getUsuario() ?>
+        </p>
+        <p>
+            <strong>Nombre:</strong>
+            <?php echo $this->usuario->getNombre() ?>
+        </p>
+        <p>
+            <strong>Apellido:</strong>
+            <?php echo $this->usuario->getApellido() ?>
+        </p>
+        <?php if ( $this->verEmails ) : ?>
+            <p>
+                <strong>Email:</strong>
+                <?php echo $this->usuario->getEmail() ?>
+            </p>
+        <?php endif; ?>
+    </div>
+
+</div>
+
 <hr />
 
 <ul class="actionList clearfix">

@@ -48,28 +48,16 @@ class Usuarios_Model_Entity_UsuarioProxy extends \Usuarios_Model_Entity_Usuario 
         return parent::getId();
     }
 
-    public function getNombre()
+    public function getUsuario()
     {
         $this->__load();
-        return parent::getNombre();
+        return parent::getUsuario();
     }
 
-    public function setNombre($nombre)
+    public function setUsuario($usuario)
     {
         $this->__load();
-        return parent::setNombre($nombre);
-    }
-
-    public function getApellido()
-    {
-        $this->__load();
-        return parent::getApellido();
-    }
-
-    public function setApellido($apellido)
-    {
-        $this->__load();
-        return parent::setApellido($apellido);
+        return parent::setUsuario($usuario);
     }
 
     public function getEmail()
@@ -108,6 +96,78 @@ class Usuarios_Model_Entity_UsuarioProxy extends \Usuarios_Model_Entity_Usuario 
         return parent::setRole($role);
     }
 
+    public function getFecha_cre()
+    {
+        $this->__load();
+        return parent::getFecha_cre();
+    }
+
+    public function setFecha_cre($fecha_cre)
+    {
+        $this->__load();
+        return parent::setFecha_cre($fecha_cre);
+    }
+
+    public function getFecha_mod()
+    {
+        $this->__load();
+        return parent::getFecha_mod();
+    }
+
+    public function setFecha_mod($fecha_mod)
+    {
+        $this->__load();
+        return parent::setFecha_mod($fecha_mod);
+    }
+
+    public function getNombre()
+    {
+        $this->__load();
+        return parent::getNombre();
+    }
+
+    public function setNombre($nombre)
+    {
+        $this->__load();
+        return parent::setNombre($nombre);
+    }
+
+    public function getApellido()
+    {
+        $this->__load();
+        return parent::getApellido();
+    }
+
+    public function setApellido($apellido)
+    {
+        $this->__load();
+        return parent::setApellido($apellido);
+    }
+
+    public function getWebsite()
+    {
+        $this->__load();
+        return parent::getWebsite();
+    }
+
+    public function setWebsite($website)
+    {
+        $this->__load();
+        return parent::setWebsite($website);
+    }
+
+    public function getFoto()
+    {
+        $this->__load();
+        return parent::getFoto();
+    }
+
+    public function setFoto($foto)
+    {
+        $this->__load();
+        return parent::setFoto($foto);
+    }
+
     public function getComentarios()
     {
         $this->__load();
@@ -129,7 +189,7 @@ class Usuarios_Model_Entity_UsuarioProxy extends \Usuarios_Model_Entity_Usuario 
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'nombre', 'apellido', 'email', 'clave', 'role', 'comentarios');
+        return array('__isInitialized__', 'id', 'usuario', 'email', 'clave', 'role', 'fecha_cre', 'fecha_mod', 'nombre', 'apellido', 'website', 'foto', 'comentarios');
     }
 
     public function __clone()

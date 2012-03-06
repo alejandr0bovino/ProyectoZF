@@ -3,7 +3,8 @@
 class Default_ErrorController extends ProyectoZF_Controller_Action
 {
     public function deniedAction() {
-    
+        $this->view->denyAction =  ucfirst($this->_getParam('denyAction', ''));
+        //$this->view->denyModule =  $this->_getParam('denyModule', '');
     }
     
     public function errorAction()
@@ -68,9 +69,9 @@ class Default_ErrorController extends ProyectoZF_Controller_Action
     }
 
     
-    public function denyAction(){
+ /*   public function denyAction(){
          $this->view->recursoDenegado =  $this->_getParam('denegado', '');
-    }
+    }*/
 
 }
 

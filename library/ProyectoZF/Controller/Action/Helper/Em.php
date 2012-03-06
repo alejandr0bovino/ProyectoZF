@@ -1,10 +1,6 @@
 <?php
 
-namespace ProyectoZF\Controller\Action\Helper;
-
-//use Doctrine\ORM\EntityManager;
-
-class Em extends \Zend_Controller_Action_Helper_Abstract
+class ProyectoZF_Controller_Action_Helper_Em extends Zend_Controller_Action_Helper_Abstract
 {
 
     private $em;

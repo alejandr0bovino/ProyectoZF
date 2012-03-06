@@ -23,12 +23,16 @@
 
     <table class="list">
         <thead>
-            <tr>
+            <tr>                
                 <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Usuario</th>
                 <th>Email</th>
                 <th>Clave</th>
+                <th>Creado</th>
+                <th>Modificado</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                
                 <th colspan="2">Acciones</th>
             </tr>
         </thead>
@@ -36,12 +40,16 @@
         <tbody>
             <?php foreach($this->listaUsuario as $usuario): ?>
 
-                <tr>
+                <tr>                    
                     <td><?php echo $usuario->getId() ?></td>
-                    <td><?php echo $usuario->getNombre() ?></td>
-                    <td><?php echo $usuario->getApellido() ?></td>
+                    <td><?php echo $usuario->getUsuario() ?></td>
                     <td><?php echo $usuario->getEmail() ?></td>
                     <td><?php echo $usuario->getClave() ?></td>
+                    <td><small><?php echo $usuario->getFecha_cre() ?></small></td>
+                    <td><small><?php echo $usuario->getFecha_mod() ?></small></td>
+                    <td><?php echo $usuario->getNombre() ?></td>
+                    <td><?php echo $usuario->getApellido() ?></td>
+                    
                     <td class="action"><a href="<?php echo $this->baseUrl ?>/admin/usuario/editar/id/<?php echo $usuario->getId() ?>/"><span>editar</span></a></td>
                     <td class="action"><a onclick="return confirm('¿Esta seguro que desea eliminar a <?php echo $usuario->getNombre() . " " . $usuario->getApellido() ?> ?');" href="<?php echo $this->baseUrl ?>/admin/usuario/eliminar/id/<?php echo $usuario->getId() ?>/"><span>eliminar</span></a></td>
                 </tr>

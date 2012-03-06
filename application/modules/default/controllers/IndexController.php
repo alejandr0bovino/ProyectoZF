@@ -14,8 +14,17 @@ class Default_IndexController extends ProyectoZF_Controller_Action
     }
     
     public function demoJqueryUiAction(){
-        
+        $this->view->headScript()->prependScript('         var baseUrl = "' . $this->view->baseUrl . '";' . PHP_EOL);
     }
+
+    public function foolAction(){
+        $this->view->fool = "fool";
+    }  
+
+    public function holaAction(){
+        $this->view->fool = "hola";
+        $this->render("fool");
+    }        
 
 }
 

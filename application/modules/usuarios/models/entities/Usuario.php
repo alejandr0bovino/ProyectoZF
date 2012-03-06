@@ -18,21 +18,16 @@ class Usuarios_Model_Entity_Usuario
      */    
     private $id;
 
- /** 
-     * @Column(name="nombre", type="string", length=30)
-     */
-    private $nombre;
-    
     /** 
-     * @Column(name="apellido", type="string", length=30)
+     * @Column(name="usuario", type="string", length=30)
      */
-    private $apellido;
+    private $usuario;
     
     /** 
      * @Column(name="email", type="string", length=50)
      */
     private $email;
-    
+
     /** 
      * @Column(name="clave", type="string", length=30)
      */
@@ -41,7 +36,42 @@ class Usuarios_Model_Entity_Usuario
     /**
      *  @Column(name="role", type="string", length=30)
      */
-    private $role = self::ROLE_USUARIO;    
+    private $role = self::ROLE_USUARIO;  
+        
+    /** 
+     * @Column(name="fecha_cre", type="datetime")
+     */
+    private $fecha_cre;
+
+    /** 
+     * @Column(name="fecha_mod", type="datetime")
+     */
+    private $fecha_mod;    
+
+    /** 
+     * @Column(name="nombre", type="string", length=30)
+     */
+    private $nombre;
+    
+    /** 
+     * @Column(name="apellido", type="string", length=30)
+     */
+    private $apellido;
+
+    /** 
+     * @Column(name="website", type="string", length=100)
+     */
+    private $website;
+
+    /** 
+     * @Column(name="foto", type="string", length=50)
+     */
+    private $foto;    
+    
+
+    
+
+  
 
     /** 
      * @param \Doctring\Common\Collections\ArrayCollection $property
@@ -62,6 +92,60 @@ class Usuarios_Model_Entity_Usuario
         return $this->id;
     }
 
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+    }
+      
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }    
+
+    public function getClave()
+    {
+        return $this->clave;
+    }
+    public function setClave($clave)
+    {
+        $this->clave = $clave;
+    }
+            
+    public function getRole()
+    {
+        return $this->role;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+    
+    public function getFecha_cre()
+    {
+        return $this->fecha_cre;
+    }
+    public function setFecha_cre($fecha_cre)
+    {
+        $this->fecha_cre = $fecha_cre;
+    }
+    
+    public function getFecha_mod()
+    {
+        return $this->fecha_mod;
+    }
+    public function setFecha_mod($fecha_mod)
+    {
+        $this->fecha_mod = $fecha_mod;
+    }       
+                    
     public function getNombre()
     {
         return $this->nombre;
@@ -78,35 +162,27 @@ class Usuarios_Model_Entity_Usuario
     public function setApellido($apellido)
     {
         $this->apellido = $apellido;
-    }    
+    }  
 
-    public function getEmail()
+    public function getWebsite()
     {
-        return $this->email;
+        return $this->website;
     }
-    public function setEmail($email)
+    public function setWebsite($website)
     {
-        $this->email = $email;
-    }
-    
-    public function getClave()
+        $this->website = $website;
+    }       
+     
+    public function getFoto()
     {
-        return $this->clave;
+        return $this->foto;
     }
-    public function setClave($clave)
+    public function setFoto($foto)
     {
-        $this->clave = $clave;
-    }
-    
-    public function getRole()
-    {
-        return $this->role;
-    }
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-    
+        $this->foto = $foto;
+    }        
+
+
     
     
     public function getComentarios() {

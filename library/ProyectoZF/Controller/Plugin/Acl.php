@@ -1,6 +1,5 @@
 <?php
 
-
 class ProyectoZF_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract {
     
     protected $_acl;
@@ -43,16 +42,29 @@ class ProyectoZF_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract {
         return $this->_errorPage;
     }
     
-    public function preDispatch(Zend_Controller_Request_Abstract $request) {
+//    public function preDispatch(Zend_Controller_Request_Abstract $request) {
+    public function routeShutdown(Zend_Controller_Request_Abstract $request) {  
+    
+        $requestModule = $request->getModuleName();
+        $requestController = $request->getControllerName();
+        $requestAction = $request->getActionName();
+      
         $resourceName = '';
-        if ($request->getModuleName() != 'default') {
-            $resourceName .= $request->getModuleName() . ':';
+        if ($requestModule != 'default') {
+            $resourceName .= $requestModule . ':';
         }
-        $resourceName .= $request->getControllerName();
-        if (!$this->getAcl()->isAllowed($this->_roleName, $resourceName, $request->getActionName())) {
-           // $message = 'No tiene privilegios de acceso al recurso: "'.$resourceName.'"'; 
-           // throw new Zend_Acl_Exception($message, 4463); 
-            $this->denyAccess();
+        $resourceName .= $requestController;
+        if (!$this->getAcl()->isAllowed($this->_roleName, $resourceName, $requestAction)) {
+            //$message = 'No tiene privilegios de acceso al recurso: "'.$resourceName.'"'; 
+            //throw new Zend_Acl_Exception($message, 4463); 
+            
+            if ($requestModule == "admin") {                
+                $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+                $redirector->gotoUrl('/admin/login/');
+            }
+            
+            $this->_request->setParam("denyAction", $requestAction);
+            return $this->denyAccess();
         }
     }
     
@@ -61,5 +73,7 @@ class ProyectoZF_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract {
         $this->_request->setControllerName($this->_errorPage['controller']);
         $this->_request->setActionName($this->_errorPage['action']);
     }
+
+
 
 }

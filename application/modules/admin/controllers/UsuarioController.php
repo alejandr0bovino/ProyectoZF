@@ -43,7 +43,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
     
     public function crearAction()
     {
-        $this->_addScriptCheckEmail();
+        $this->_addScriptCheck();
         
         $titulo = $this->_config->parametros->mvc->admin->usuario->crear->titulo;
         $this->view->headTitle()->prepend($titulo);
@@ -52,6 +52,8 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         $form = $this->_getForm();
         
         $form->removeElement('passwordText');
+        //$form->getElement('foto')->setDescription('');
+        $form->removeElement('fotoEliminar');
                 
         $this->view->form = $form;                
         
@@ -70,9 +72,12 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         $form->passwordVerify->setRenderPassword(true);
         
         $postParams = $this->_request->getPost();
+
         $id = $postParams['id'] > 0 ? $postParams['id'] : 0;
         
-        $this->_addScriptCheckEmail($id);
+        $fotoActual = $postParams['fotoActual'];
+
+        $this->_addScriptCheck($id);
 
         if ( $id > 0 ) {
                                     
@@ -81,14 +86,15 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
                 $form->passwordVerify->setRequired(false); 
             }             
             
-            $usuarioActual = $this->repository->obtenerPorId($id);
-            $nombreActual = $usuarioActual->getNombre();
-            $emailActual = $usuarioActual->getEmail();
-            $claveActual = $usuarioActual->getClave();
+            $usuario = $this->repository->obtenerPorId($id);
+            $usuarioActual = $usuario->getUsuario();
+            $nombreActual = $usuario->getNombre();
+            $emailActual = $usuario->getEmail();
+            $claveActual = $usuario->getClave();
             
             
-            if ( $postParams["nombre"] == $nombreActual ) {            
-                $form->nombre->removeValidator('Zend_Validate_Db_NoRecordExists');                
+            if ( $postParams["usuario"] == $usuarioActual ) {            
+                $form->usuario->removeValidator('Zend_Validate_Db_NoRecordExists');                
             }   
             if ( $postParams["email"] == $emailActual ) {            
                 $form->email->removeValidator('Zend_Validate_Db_NoRecordExists');                
@@ -97,6 +103,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         }
                 
         $this->view->form = $form;
+
         
         if ( !$form->isValid($postParams) ) {
                     
@@ -104,7 +111,7 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
                 
                 $form->password->setLabel('Nueva Clave');
                 $form->passwordVerify->setLabel('Confirmar Nueva Clave');
-                
+               
                 if ( $form->password->getValue()!= null || $form->passwordVerify->getValue()!= null ) {
                     
                     $form->password->setOptions(array('class' => 'verifyPassword'))
@@ -119,30 +126,41 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
                   
                 } else {
 
-                    $form->password->setOptions(array('class' => 'optionalElement'))
+                    $form->password
+                            //->setOptions(array('class' => 'optionalElement'))
                             ->addDecorator('HtmlTag', array(
                                         'tag' => 'fieldset',
                                         'class' => 'element_form clearfix'));
 
-                    $form->passwordVerify->setOptions(array('class' => 'optionalElement'))
+                    $form->passwordVerify
+                            //->setOptions(array('class' => 'optionalElement'))
                             ->addDecorator('HtmlTag', array(
                                         'tag' => 'fieldset',
                                         'class' => 'element_form clearfix'));                    
                 }
-
+                
+                $form->foto->setDescription('<img src="' . $this->view->baseUrl . '/' . $this->_config->parametros->mvc->usuarios->perfil->foto->thumb . $fotoActual . '" />');
+                
                 $form->passwordText->setValue($claveActual);                
                 
+
+                if ( $form->fotoActual->getValue() == $this->_config->parametros->mvc->usuarios->perfil->foto->default ) {
+                    $form->removeElement('fotoEliminar');
+                }
+
+
                 $titulo = $this->_config->parametros->mvc->admin->usuario->editar->titulo;
                 $this->view->headTitle()->prepend($titulo);                
                 
-             }  else {
+            }  else {
         
                 $form->removeElement('passwordText');
+                $form->removeElement('fotoEliminar');
                 
                 $titulo = $this->_config->parametros->mvc->admin->usuario->crear->titulo;
                 $this->view->headTitle()->prepend($titulo);
 
-             }
+            }
              
             $this->view->titulo = 'Validando Usuario';
             $this->view->form = $form;
@@ -151,13 +169,44 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         }
         
         $clave = $form->password->getValue() != null ? $form->password->getValue() : $claveActual;
+
+
+        if ( $form->fotoEliminar->getValue() == 1 ) {
+            
+            $usuarioFoto = $this->_config->parametros->mvc->usuarios->perfil->foto->default;
+            $this->repository->eliminarFotoUsuario($fotoActual);
+
+        } else {
+
+            $fotoFileName = $form->foto->getFileName();
+
+            if ( $fotoFileName != null ) { 
                 
+                $form->foto->addFilter(new Zend_Filter_File_Rename(
+                        //array('target' => $this->_config->parametros->mvc->usuarios->perfil->foto->large . mt_rand() . basename($fotoFileName),
+                        array('target' => $this->_config->parametros->mvc->usuarios->perfil->foto->large . $form->usuario->getValue() . mt_rand() . "." .pathinfo($fotoFileName, PATHINFO_EXTENSION),                    
+                            'overwrite' => false)));
+            }
+                        
+            $formFotoValue = $form->foto->getValue();
+
+            $usuarioFoto =  $formFotoValue != null ? $formFotoValue : $fotoActual;
+
+        }
+
+ 
+        
+                      
+
         $data = array(
             "id" => $form->id->getValue(),
+            "usuario" => $form->usuario->getValue(),
+            "email" => $form->email->getValue(),
+            "clave" => $clave,
             "nombre" => $form->nombre->getValue(),
             "apellido" => $form->apellido->getValue(),
-            "email" => $form->email->getValue(),
-            "clave" => $clave
+            "website" => $form->website->getValue(),                        
+            "foto" => $usuarioFoto
         );        
         
         $this->repository->guardar($data);
@@ -170,13 +219,19 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
     {
 
         $id = (int) $this->getRequest()->getParam("id", 0);
-        $this->_addScriptCheckEmail($id);
+        $this->_addScriptCheck($id);
         
+        $usuario = $this->repository->obtenerPorId($id);
+
+        if(null === $usuario){
+                $this->_redirect("/admin/");
+        } 
+
         $form = $this->_getForm();
 
         $form->password->addDecorator('Label', array('escape' => false))
                 ->setLabel('Nueva Clave')
-                ->setOptions(array('class' => 'optionalElement'))
+                //->setOptions(array('class' => 'optionalElement'))
                 ->addDecorator('HtmlTag', array(
                             'tag' => 'fieldset',
                             'class' => 'element_form clearfix'));
@@ -184,24 +239,37 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         
         $form->passwordVerify->addDecorator('Label', array('escape' => false, 'class' => 'passwordVerify'))
                 ->setLabel('Confirmar Nueva Clave')
-                ->setOptions(array('class' => 'optionalElement'))
+                //->setOptions(array('class' => 'optionalElement'))
                 ->addDecorator('HtmlTag', array(
                             'tag' => 'fieldset',
                             'class' => 'element_form clearfix'));
-                  
-        $usuario = $this->repository->obtenerPorId($id);
-
+                                              
+        
         $form->populate(array(
             'id' => $usuario->getId(),
+            'usuario' => $usuario->getUsuario(),
+            'email' => $usuario->getEmail(),
+            'passwordText' => $usuario->getClave(),
             'nombre' => $usuario->getNombre(),
             'apellido' => $usuario->getApellido(),
-            'email' => $usuario->getEmail(),
-            'passwordText' => $usuario->getClave()));
+            'website' => $usuario->getWebsite()));
+                    
+
+        $usuarioFoto = $usuario->getFoto();
+
+        if ( $usuarioFoto == $this->_config->parametros->mvc->usuarios->perfil->foto->default ) {
+            $form->removeElement('fotoEliminar');
+        }
+
+        $form->fotoActual->setValue($usuarioFoto);
+        $form->foto->setDescription('<img src="' . $this->view->baseUrl . '/' . $this->_config->parametros->mvc->usuarios->perfil->foto->thumb . $usuarioFoto . '" />');
 
         $this->view->form = $form;                 
 
         $titulo = $this->_config->parametros->mvc->admin->usuario->editar->titulo;
+        
         $this->view->headTitle()->prepend($titulo);
+        
         $this->view->titulo = "Editar Usuario";
         
         $this->render('crear');
@@ -224,14 +292,11 @@ class Admin_UsuarioController extends ProyectoZF_Controller_Action
         return new Admin_Form_Usuario();
     }
     
-    private function _addScriptCheckEmail($id = 0) {
+    private function _addScriptCheck($id = 0) {
     
         $this->view->headScript()->prependFile($this->view->baseUrl. '/js/jquery.form-validation-and-hints.js');        
-        $this->view->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
-        $this->view->headScript()->captureStart();
-        echo '         var baseUrl = "'. $this->view->baseUrl .'", usuarioId = "'. $id .'";'. PHP_EOL;
-        $this->view->headScript()->captureEnd() ;
-        $this->view->headScript()->appendFile($this->view->baseUrl .'/js/checkEmail.js');      
+        $this->view->headScript()->appendScript('         var baseUrl = "' . $this->view->baseUrl . '", usuarioId = "' . $id . '";' . PHP_EOL);
+        $this->view->headScript()->appendFile($this->view->baseUrl .'/js/checkUser.js');      
 
     }    
 }

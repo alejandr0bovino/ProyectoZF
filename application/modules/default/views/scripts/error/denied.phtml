@@ -1,3 +1,17 @@
-<h3>Acceso denegado</h3>
+<!-- 
 
-<p>ողանա կենտրոնանալ տեքստի ձևավորման վրա: Lorem Ipsum օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման, ի տարբերություն «Բովանդակություն, բովանդակություն» սովորական կրկննության, ինչը ընթերցողի համար հասկանալի է: Շատ համակարգչային տպագրական ծրագրեր և ինտերնետային էջերի խմբագրիչներ այն օգտագործում են որպես իրենց ստանդարտ տեքստային մոդել, և հետևապես, ինտերնետում Lorem Ipsum-ի որոնման արդյունքում կարել</p>
+<?php //if ($this->denyModule == "admin" ) : ?>
+
+<p>Admin</p>
+
+<?php //else: ?>
+
+<h3><strong><?php //echo $this->denyAction ?></strong> es una página privada</h3>
+<p>Por favor <a href="<?php //echo $this->baseUrl ?>/usuarios/login/" style="text-decoration:underline">inicia sesión</a> para ingresar.</p>
+
+<?php //endif ?>
+
+-->
+
+<h3><strong><?php echo $this->denyAction ?></strong> es una página privada</h3>
+<p>Por favor <a href="<?php echo $this->baseUrl ?>/usuarios/login/" style="text-decoration:underline">inicia sesión</a> para ingresar.</p>

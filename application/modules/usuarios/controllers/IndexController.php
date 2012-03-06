@@ -8,7 +8,6 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
     {
         parent::init();
         
-        //$this->repository = new Usuarios_Model_Repository_Common();
         $this->repository = $this->_helper->Em('Usuarios_Model_Repository_Common');
     }    
     
@@ -36,11 +35,15 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
         
         $this->view->headTitle()->prepend($titulo);
                 
-        $this->view->titulo = $titulo;
+        $this->view->titulo = $titulo;                
         
-        $this->view->listaUsuario = $this->repository->obtenerTodos();
+        $this->view->listaUsuario = $this->repository->obtenerTodos();        
+        $this->view->thumbPath = $this->_config->parametros->mvc->usuarios->perfil->foto->thumb;        
+
+        $this->_addScriptBuscar();
         
         $this->view->form = $this->_getForm();
+         
     }
 
     public function verAction()
@@ -68,6 +71,8 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
         $this->view->headTitle()->prepend($titulo);
         
         $this->view->titulo = $titulo ;
+
+        $this->view->fotoPath = $this->_config->parametros->mvc->usuarios->perfil->foto->large;
     }
 
     public function buscarAction()
@@ -78,15 +83,18 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
         }        
         
         $postParams = $this->_request->getPost();
-
+                                     
         $form = $this->_getForm();
-       
+        
+        $this->_addScriptBuscar();
+        
         if ( $form->isValid($postParams) ){
 
             $nombre = $form->nombre->getValue();
 
             $this->view->listaUsuario = $this->repository->buscarPorNombre($nombre);
-
+            $this->view->thumbPath = $this->_config->parametros->mvc->usuarios->perfil->foto->thumb; 
+            
             $this->view->linkVolver = true;
 
             $titulo = sprintf($this->_config->parametros->mvc->usuarios->index->buscar->titulo, count($this->view->listaUsuario));
@@ -102,6 +110,11 @@ class Usuarios_IndexController extends ProyectoZF_Controller_Action
         }
         
     }
+    private function _addScriptBuscar() {
+    
+        $this->view->headScript()->prependScript('         var baseUrl = "' . $this->view->baseUrl . '";' . PHP_EOL);
+
+    }   
     
     private function _getForm()
     {

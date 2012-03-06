@@ -1,11 +1,12 @@
 <?php
+Doctrine\DBAL\Types\Type::overrideType('datetime', 'ProyectoZF\DBAL\types\DateTimeType');
+
 use Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
     Doctrine\DBAL\DriverManager,
     Doctrine\Common\Cache\ApcCache;
 
-use Zend_Controller_Action_HelperBroker as HelperBroker,
-    ProyectoZF\Controller\Action\Helper\Em;
+use Zend_Controller_Action_HelperBroker as HelperBroker;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -59,12 +60,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $em;
     }
     
-    public function _initActionHelpers()
+    public function _initActionHelperEm()
     {
         $this->bootstrap('doctrine');
         $em = $this->getResource('doctrine');
 
-        HelperBroker::addHelper(new Em($em));
+        HelperBroker::addHelper(new ProyectoZF_Controller_Action_Helper_Em($em));
     }   
  
     protected function _initTranslate()

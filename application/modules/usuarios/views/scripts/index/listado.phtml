@@ -46,12 +46,15 @@
 
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Usuario</th>
                 <?php if ( $this->verEmails ) : ?>
                     <th>Email</th>
                 <?php endif; ?>
-                <th>Comentarios hechos en Productos</th>
+                <th>Creado</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Sitio web</th>                
+                <th>Comentarios en Productos</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -60,11 +63,17 @@
             <?php foreach($this->listaUsuario as $usuario): ?>
 
                 <tr>
+                    <td>
+                        <img src="<?php echo $this->baseUrl ?>/<?php echo $this->thumbPath . $usuario->getFoto() ?>" alt="<?php echo $usuario->getUsuario() ?>" />
+                        <?php echo $usuario->getUsuario() ?>
+                    </td>
+                    <?php if ( $this->verEmails ) : ?>                    
+                        <td><?php echo $usuario->getEmail() ?></td>
+                    <?php endif; ?>
+                    <td><small><?php echo $usuario->getFecha_cre() ?></small></td>
                     <td><?php echo $usuario->getNombre() ?></td>
                     <td><?php echo $usuario->getApellido() ?></td>
-                    <?php if ( $this->verEmails ) : ?>                    
-                    <td><?php echo $usuario->getEmail() ?></td>
-                    <?php endif; ?>
+                    <td><small><?php echo $usuario->getWebsite() ?></small></td>                    
                     <td class="productComments">
                         <?php if(count($usuario->getComentarios()) > 0): ?>
                             <ol>

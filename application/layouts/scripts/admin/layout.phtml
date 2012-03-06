@@ -9,19 +9,18 @@
 <?php echo $this->headTitle() . "\n" ?>
 <?php echo $this->headMeta() . "\n" ?>
 <?php
-    //if ( $this->jQuery()->isEnabled() )
-        $this->headLink()->prependStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/vader/jquery-ui.css');
+    $this->headLink()->prependStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/vader/jquery-ui.css');
     $this->headLink()->prependStylesheet('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400|Viga');    
     echo $this->headLink();
- ?>  
+?>  
 
 
 </head>
-<body>
+<body class="adminLayout">
 
     <div class="wrapper">
 
-        <?php echo $this->render('header.phtml') ?> 
+        <?php echo $this->render('admin/header.phtml') ?> 
         
         <section>
             

@@ -4,7 +4,7 @@
     
     <hr />
     
-    <?php if(isset($this->loginMensaje) && $this->loginEstado != "logoutCorrecto"):?>
+    <?php if(isset($this->loginMensaje)):?>
         <div class="form-errors form-errors-login"><?php echo $this->loginMensaje;?></div>
     <?php endif;?>
 

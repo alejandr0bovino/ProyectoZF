@@ -1,6 +1,6 @@
 <?php
 
-class Admin_Model_Login
+class Usuarios_Model_Login
 {
     
     const NOT_IDENTITY = 'notIdentity';
@@ -70,16 +70,7 @@ class Admin_Model_Login
 
     public static function isLoggedIn()
     {
-        //return Zend_Auth::getInstance()->hasIdentity();
-         
-        $auth = Zend_Auth::getInstance();        
-        if ($auth->hasIdentity()) {
-            if ( $auth->getIdentity()->role == "admin") {
-                return true;
-            }
-        }
-        return false;
-
+        return Zend_Auth::getInstance()->hasIdentity();
     }
 
     public function login($nick, $password)
@@ -87,7 +78,7 @@ class Admin_Model_Login
         if(!empty($nick) && !empty($password))
         {
             $autAdapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
-            $autAdapter->setTableName('snimda');
+            $autAdapter->setTableName('usuarios');
             $autAdapter->setIdentityColumn('email');
             $autAdapter->setCredentialColumn('clave');
             $autAdapter->setIdentity($nick);
