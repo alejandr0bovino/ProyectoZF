@@ -40,6 +40,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initDoctrine()
     {
+       
         $config = new Configuration();
         $cache = new ApcCache();
         $config->setMetadataCacheImpl($cache);

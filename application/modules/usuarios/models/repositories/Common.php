@@ -1,7 +1,8 @@
 <?php
 
 //namespace Repository;
- 
+//use ProyectoZF\DoctrineExtensions\Paginate\Paginate;    
+
 class Usuarios_Model_Repository_Common 
 {
 
@@ -18,25 +19,17 @@ class Usuarios_Model_Repository_Common
     {
         $q = 'SELECT u FROM Usuarios_Model_Entity_Usuario u ORDER BY u.fecha_cre DESC';
         return $this->_em->createQuery($q)->getResult();                 
-    }          
+    } 
 
-    public function buscarPorUsuario($usuario)
-    {
-        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.usuario = '$usuario'";
-        return $this->_em->createQuery($q)->getResult();
-    }
-        
+
     public function buscarPorNombre($nombre)
     {
-        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.nombre = '$nombre'";
-        return $this->_em->createQuery($q)->getResult();
+        //$q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.nombre = '$nombre'";
+        //return $this->_em->createQuery($q)->getResult();
+        
+        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.nombre LIKE '$nombre%' ORDER BY u.fecha_cre DESC";
+        return $this->_em->createQuery($q)->getResult();        
     }    
-    
-    public function buscarPorEmail($email)
-    {
-        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.email = '$email'";
-        return $this->_em->createQuery($q)->getResult();
-    }       
     
     public function obtenerPorId($id)
     {         
@@ -94,14 +87,44 @@ class Usuarios_Model_Repository_Common
     }  
 
     public function eliminarFotoUsuario($foto)
-    {    
-
-        
-
+    {            
         unlink($this->_config->parametros->mvc->usuarios->perfil->foto->large . $foto);
         unlink($this->_config->parametros->mvc->usuarios->perfil->foto->thumb . $foto);        
         
     }  
-     
+
+
+
+    //////////////////////////
+    // ajax //////////////////
+    //////////////////////////
+
+
+    //////////////////////////
+
+    // form usuario checkUser.js
+    public function buscarPorUsuario($usuario)
+    {
+        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.usuario = '$usuario'";
+        return $this->_em->createQuery($q)->getResult();
+    }
+
+    // form usuario checkUser.js
+    public function buscarPorEmail($email)
+    {
+        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.email = '$email'";
+        return $this->_em->createQuery($q)->getResult();
+    }  
+
+
+    //////////////////////////
+
+    // búsqueda de usuarios por nombre - Autocomplete    
+    public function buscarPorTerm($term) 
+    {
+        $q = "SELECT u FROM Usuarios_Model_Entity_Usuario u WHERE u.nombre LIKE '$term%' ORDER BY u.fecha_cre DESC";
+        //return $this->_em->createQuery($q)->setMaxResults(6)->getResult();
+        return $this->_em->createQuery($q)->getResult();
+    }
         
 }

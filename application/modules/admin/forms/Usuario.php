@@ -35,7 +35,14 @@ class Admin_Form_Usuario extends Zend_Form {
         $usuario->setLabel('Usuario')
                 ->setAttrib('maxLength', 30)
                 ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => 'Requerido')))
-                ->addValidator('alnum', true, array('messages' => array('notAlnum' => "El valor no es alfanúmerico")))
+                //->addValidator('alnum', true, array('messages' => array('notAlnum' => "'%value%' El valor no es alfanúmerico")))
+                ->addValidator('regex', true, array(
+                    //'pattern' => '(^(?=.*?[A-Za-z])[a-zA-Z0-9]{5,20}$)',
+                    'pattern' => '(^[A-Za-z][a-zA-Z0-9]{4,20}$)',                    
+                    'messages' => array(
+                        'regexInvalid'   => "El valor no es alfanumérico",
+                        'regexNotMatch' => 'El valor debe comenzar con una letra, debe contener entre 5 y 20 caracteres, no puede contener "ñ" , "Ñ" o caracteres de puntuación',
+                        'regexErrorous'  => "Error '%pattern%'")))                
                 ->addValidator($uniqueUsuarioValidator, true)       
                 ->setRequired(true)
                 ->setOptions(array('class' => 'verifyText'))

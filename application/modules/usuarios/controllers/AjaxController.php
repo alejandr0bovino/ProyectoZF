@@ -18,11 +18,14 @@ class Usuarios_AjaxController extends Zend_Controller_Action
         $term = $this->getRequest()->getParam("term");
         
         $listaUsuarioNombre = array();
-        foreach ($this->repository->obtenerTodos() as $usuario) { 
-            if( stripos($usuario->getNombre(), $term) === 0 ){
-                $listaUsuarioNombre[] = $usuario->getNombre();
-            }
-        } 
+        
+        $dateFormat = "d ' de ' MMMM ' de ' YYYY";
+
+        foreach ($this->repository->buscarPorTerm($term) as $usuario) {           
+            //$listaUsuarioNombre[] = $usuario->getNombre();                  
+            $listaUsuarioNombre[] = array("label" => $usuario->getNombre(), "foto" => $usuario->getFoto(), "fecha" => $usuario->getFecha_cre()->toString($dateFormat)  );
+        }                
+
         echo json_encode($listaUsuarioNombre);
     }      
 
